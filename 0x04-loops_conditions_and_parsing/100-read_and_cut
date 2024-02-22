@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Print "Best School" 10 times
+i="/etc/passwd"
+while IFS= read -r line; do
+    cut -d: -f1,3,6 <<< "$line"
+done < "$i"

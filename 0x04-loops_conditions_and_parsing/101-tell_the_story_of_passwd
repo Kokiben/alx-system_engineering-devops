@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Print the contents of the `/etc/passwd` file
+mifil="/etc/passwd"
+l1=""
+l2=""
+l3=""
+while IFS= read -r line
+do
+    l1="$(echo "$line" | cut -d":" -l1)"
+    l2="$(echo "$line" | cut -d":" -l4)"
+    l3="$(echo "$line" | cut -d":" -l6)"
+    l4="$(echo "$line" | cut -d":" -l7)"
+    l5="$(echo "$line" | cut -d":" -l3)"
+    l6="$(echo "$line" | cut -d":" -l2)"
+    l7="$(echo "$line" | cut -d":" -l5)"
+    echo "The user ${l1} is part of the ${l2} gang, lives in ${l3} and rides ${l4}. ${l5}'s place is protected by the passcode ${l6}, more info about the user here: ${l7}"
+done < "$mifil"
