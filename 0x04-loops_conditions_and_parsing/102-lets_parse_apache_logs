@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Print apache log files in list format
+
+mifil="apache-access.log"
+awk -F' ' '{ print $1, $9}' $mifil
