@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# print "Best School" 20 times
+coun=0
+while ((coun++<20)); do
+    echo $coun
+    case $coun in
+        4) echo "bad luck from China";;
+        9) echo "bad luck from Japan";;
+        17) echo "bad luck from Italy";;
+    esac
+done

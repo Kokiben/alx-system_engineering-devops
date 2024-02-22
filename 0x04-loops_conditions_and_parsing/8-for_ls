@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# print "Best School" 10 times
+for f in *; do
+    echo "${f#*-}"
+done

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Print "Best School" 10 times
+cr=0
+while ((cr++<100)); do
+    if (( cr % 3 == 0 && cr % 5 == 0 )); then
+        echo "FizzBuzz"
+    elif (( cr % 3 == 0 )); then
+        echo "Fizz"
+    elif (( cr % 5 == 0 )); then
+        echo "Buzz"
+    else
+        echo $cr
+    fi
+done
