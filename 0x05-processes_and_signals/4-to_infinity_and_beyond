@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# Print "To infinity and beyond"
-while :
-do
-    echo "To infinity and beyond"
-    sleep 2
-done
+#displays processes containing bash name
+# shellcheck disable=SC2009
+ps auxf | grep bash
