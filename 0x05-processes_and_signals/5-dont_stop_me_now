@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Print bash
+fil_n="4-to_infinity_and_beyond"
+pils=$(pgrep -f "$fil_n")
+if [ -n "$pils" ]; then
+  kill "$pils"
+fi
