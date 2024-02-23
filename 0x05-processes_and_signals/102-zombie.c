@@ -16,13 +16,13 @@ return (0);
 }
 
 /**
- * zom - Creats zombie
+ * main - Creats zombie
  * Return: 0
  */
-int zom(void)
+int main(void)
 {
 int j;
-pil_t zob;
+pid_t zob;
 
 for (j = 0; j < 5; j++)
 {
