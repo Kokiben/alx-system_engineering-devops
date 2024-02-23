@@ -1,5 +1,5 @@
-#!/usr/bin/env
-# Displays 'To infinity and beyond' indefinitely
+#!/usr/bin/env bash
+# Print "To infinity and beyond"
 
 while true
 do
