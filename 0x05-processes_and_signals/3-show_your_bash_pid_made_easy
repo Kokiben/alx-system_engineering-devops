@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# Print bash
-for pid in /proc/[0-9]*; do
-  n=$(cat "$pid/comm" 2>/dev/null)
-  pid=$(basename "$pid")
-  if [[ "$n" == *"bash"* ]]; then
-    echo "$pid $n"
-  fi
-done
+# Displays the PID along with the process name, of 
+
+pgrep bash -l
