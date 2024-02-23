@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# Print bash
-fil_n="4-to_infinity_and_beyond"
-pils=$(pgrep -f "$fil_n")
-if [ -n "$pils" ]; then
-  kill "$pils"
-fi
+# Script that stops task 4 process
+
+kill "$(pgrep -f 4-to_infinity_and_beyond)"
