@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Print bash
+fil_n="7-highlander"
+pils=$(pgrep -f "$fil_n")
+if [ -n "$pils" ]; then
+  kill -9 "$pils"
+fi
