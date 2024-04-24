@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
-# Update package lists and install nginx with "-y" to automatically confirm installation prompts
+# installs and configures nginx web server to listen to port 80 and
+# serves a page with content `Hello World!` when / is querried
+
 apt-get -y update
-apt-get install -y nginx
-
-# Ensure nginx is listening on port 80
-sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-available/default
-
-# Create a temporary index.html file with "Hello World!" content
+apt-get -y install nginx
 echo "Hello World!" | sudo tee /var/www/html/index.html
-
-# Restart nginx without systemctl
 sudo /etc/init.d/nginx restart
