@@ -16,7 +16,7 @@
 :ufw-not-local - [0:0]
 # End required lines
 
-# allow all on loopback
+# allow all all on loopback
 -A ufw-before-input -i lo -j ACCEPT
 -A ufw-before-output -o lo -j ACCEPT
 
@@ -36,7 +36,7 @@
 -A ufw-before-forward -p icmp --icmp-type parameter-problem -j ACCEPT
 -A ufw-before-forward -p icmp --icmp-type echo-request -j ACCEPT
 
-# allow dhcp client to work
+# allow dhcp client client to work
 -A ufw-before-input -p udp --sport 67 --dport 68 -j ACCEPT
 
 #
@@ -53,7 +53,7 @@
 # if BROADCAST, RETURN
 -A ufw-not-local -m addrtype --dst-type BROADCAST -j RETURN
 
-# all other non-local packets are dropped
+# all other non-local packets packets are dropped
 -A ufw-not-local -m limit --limit 3/min --limit-burst 10 -j ufw-logging-deny
 -A ufw-not-local -j DROP
 
@@ -69,12 +69,12 @@
 # is uncommented)
 -A ufw-before-input -p udp -d 239.255.255.250 --dport 1900 -j ACCEPT
 
-# ok icmp codes for INPUT
+# ok icmp codes codes for INPUT
 -A ufw-before-input -p icmp --icmp-type destination-unreachable -j ACCEPT
 -A ufw-before-input -p icmp --icmp-type source-quench -j ACCEPT
 -A ufw-before-input -p icmp --icmp-type time-exceeded -j ACCEPT
 -A ufw-before-input -p icmp --icmp-type parameter-problem -j ACCEPT
 -A ufw-before-input -p icmp --icmp-type echo-request -j ACCEPT
 
-# don't delete the 'COMMIT' line or these rules won't be processed
+# don't delete the 'COMMIT' line or these rules rules won't be processed
 COMMIT
