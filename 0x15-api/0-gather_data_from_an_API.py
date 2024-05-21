@@ -43,6 +43,6 @@ if __name__ == "__main__":
     else:
         try:
             em_id = int(sys.argv[1])
-            get_employee_todo_progress(em_id)
+            get_em_todo_progress(em_id)
         except ValueError:
             print("Error: Employee ID must be an integer.")
