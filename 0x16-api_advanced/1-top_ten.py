@@ -2,7 +2,6 @@
 """Function to print the titles of the first 10 hot posts of a given Reddit subreddit."""
 import requests
 
-
 def top_ten(subreddit):
     """Print the titles of the first 10 hot posts on a given subreddit."""
     url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
@@ -10,6 +9,7 @@ def top_ten(subreddit):
         "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
     }
     response = requests.get(url, headers=headers, allow_redirects=False)
+    
     if response.status_code == 404:
         print(None)
         return
@@ -26,15 +26,13 @@ def top_ten(subreddit):
         for post in results:
             title = post.get("data", {}).get("title", "")
             print(title)
-    except ValueError:
+    except (ValueError, AttributeError):
         print(None)
 
-
-# Example usage:
+# Example usage
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) > 1:
-        subreddit = sys.argv[1]
-        top_ten(subreddit)
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
     else:
-        print("Please provide a subreddit as an argument.")
+        top_ten(sys.argv[1])
