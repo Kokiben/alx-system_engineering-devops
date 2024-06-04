@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-"""function that queries the Reddit API """
+"""Function to query subscribers on a given Reddit subreddit."""
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """returns the number of subscribers"""
+    """Return the total number of subscribers on a given subreddit."""
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
     headers = {
         "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
@@ -16,9 +16,3 @@ def number_of_subscribers(subreddit):
         return 0
     results = response.json().get("data", {})
     return results.get("subscribers", 0)
-
-
-# Example usage:
-if __name__ == "__main__":
-    print(number_of_subscribers('programming'))  # Should print the number of subscribers for r/programming
-    print(number_of_subscribers('thissubredditdoesnotexist'))  # Should print 0
