@@ -1,43 +1,60 @@
 #!/usr/bin/python3
 """ Count it! """
-import json
-import requests
+from requests import get
 
+REDDIT = "https://www.reddit.com/"
+HEADERS = {'user-agent': 'my-app/0.0.1'}
 
-def count_words(subreddit, word_list, posts=None, word_counts=None):
-    if posts is None:
-        posts = []
-    if word_counts is None:
-        word_counts = {}
+def count_words(subreddit, word_list, after="", word_dic={}):
+    """
+    Returns a list containing the titles of all hot articles for a
+    given subreddit. If no results are found for the given subreddit,
+    the function should return None.
+    """
+    if not word_dic:
+        for word in word_list:
+            word_dic[word] = 0
 
-    if not subreddit:
-        print("Invalid subreddit or no posts found.")
-        return
+    if after is None:
+        word_list = [[key, value] for key, value in word_dic.items()]
+        word_list = sorted(word_list, key=lambda x: (-x[1], x[0]))
+        for w in word_list:
+            if w[1]:
+                print("{}: {}".format(w[0].lower(), w[1]))
+        return None
 
-    if len(posts) == 0:
-        reddit = praw.Reddit(client_id='YOUR_CLIENT_ID',
-                             client_secret='YOUR_CLIENT_SECRET',
-                             user_agent='YOUR_USER_AGENT')
+    url = REDDIT + "r/{}/hot/.json".format(subreddit)
 
-        try:
-            hot_posts = reddit.subreddit(subreddit).hot(limit=100)
-            for post in hot_posts:
-                posts.append(post.title.lower())
-        except:
-            print("Invalid subreddit or no posts found.")
-            return
+    params = {
+        'limit': 100,
+        'after': after
+    }
 
-    if len(posts) == 0:
-        print("No posts found.")
-        return
+    r = get(url, headers=HEADERS, params=params, allow_redirects=False)
 
-    if len(word_list) == 0:
-        for word, count in sorted(word_counts.items(), key=lambda item: (-item[1], item[0])):
-            print(f"{word}: {count}")
-        return
+    if r.status_code != 200:
+        return None
 
-    word = word_list[0].lower()
-    word_counts[word] = sum(post.count(word) for post in posts)
-    count_words(subreddit, word_list[1:], posts, word_counts)
+    try:
+        js = r.json()
+    except ValueError:
+        return None
+
+    try:
+        data = js.get("data")
+        after = data.get("after")
+        children = data.get("children")
+        for child in children:
+            post = child.get("data")
+            title = post.get("title")
+            lower = [s.lower() for s in title.split(' ')]
+
+            for w in word_list:
+                word_dic[w] += lower.count(w.lower())
+
+    except:
+        return None
+
+    return count_words(subreddit, word_list, after, word_dic)
 
 count_words('programming', ['react', 'python', 'java', 'javascript', 'scala', 'no_results_for_this_one'])
