@@ -16,12 +16,12 @@ def recurse(subreddit, hot_list=[], ftr=None):
 
     try:
         dat = rps.json().get("data", {})
-        pst = data.get("children", [])
+        pst = dat.get("children", [])
         for p in pst:
             pot = p.get("data", {})
             hot_list.append(pot.get("title", None))
 
-        ftr = data.get("after", None)
+        ftr = dat.get("after", None)
         if ftr:
             return recurse(subreddit, hot_list, ftr)
         return hot_list
