@@ -3,11 +3,11 @@
 import requests
 
 
-def recurse(subreddit, hot_list=[]):
+def recurse(subreddit, hot_list=[], ftr=None):
     """  returns a list containing the titles of all hot articles"""
     url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
     hdrs = {'User-Agent': 'my-app/0.0.1'}
-    prsms = {'after': after} if after else {}
+    prsms = {'after': ftr} if ftr else {}
 
     rps = requests.get(url, headers=hdrs, params=prsms, allow_redirects=False)
 
