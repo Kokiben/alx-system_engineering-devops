@@ -1,34 +1,29 @@
 #!/usr/bin/python3
-"""
-Recursive function that queries the Reddit API and returns a list containing
-the titles of all hot articles for a given subreddit.
-"""
+""" recursive function that queries the Reddit API """
 import requests
 
 
-def recurse(subreddit, hot_list=[], after=None):
-    """
-    Return a list containing the titles of all hot articles for a given subreddit.
-    """
+def recurse(subreddit, hot_list=[], ftr=None):
+    """  returns a list containing the titles of all hot articles"""
     url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
-    headers = {'User-Agent': 'my-app/0.0.1'}
-    params = {'after': after} if after else {}
+    hdrs = {'User-Agent': 'my-app/0.0.1'}
+    prsms = {'after': after} if after else {}
 
-    response = requests.get(url, headers=headers, params=params, allow_redirects=False)
+    rps = requests.get(url, headers=hdrs, params=prsms, allow_redirects=False)
 
-    if response.status_code != 200:
+    if rps.status_code != 200:
         return None
 
     try:
-        data = response.json().get("data", {})
-        children = data.get("children", [])
-        for child in children:
-            post = child.get("data", {})
-            hot_list.append(post.get("title", None))
+        dat = rps.json().get("data", {})
+        pst = data.get("children", [])
+        for p in pst:
+            pot = p.get("data", {})
+            hot_list.append(pot.get("title", None))
 
-        after = data.get("after", None)
-        if after:
-            return recurse(subreddit, hot_list, after)
+        ftr = data.get("after", None)
+        if ftr:
+            return recurse(subreddit, hot_list, ftr)
         return hot_list
     except (ValueError, KeyError):
         return None
@@ -40,8 +35,8 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Please pass an argument for the subreddit to search.")
     else:
-        result = recurse(sys.argv[1])
-        if result is not None:
-            print(len(result))
+        rslt = recurse(sys.argv[1])
+        if rslt is not None:
+            print(len(rslt))
         else:
             print("None")
