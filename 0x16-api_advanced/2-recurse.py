@@ -5,10 +5,10 @@ recursive function that queries the Reddit API
 import requests
 
 
-def recurse(subreddit, hot_list=[], pagination_token=None):
+def recurse(subreddit, hot_list=[], after=None):
     api_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     query_paramt = {
-        "after": pagination_token
+        "after": after  # The query parameters
     }
     api_reqt = requests.get(
         api_url, headers={'User-Agent': 'Python/requests'}, params=query_paramt)
@@ -23,6 +23,6 @@ def recurse(subreddit, hot_list=[], pagination_token=None):
                 return None
             return hot_list
         else:
-            return recurse(subreddit, hot_list, pagination_token=pagination_token)
+            return recurse(subreddit, hot_list, after=pagination_token)
     except Exception:
         return None
