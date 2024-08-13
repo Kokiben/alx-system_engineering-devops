@@ -15,7 +15,7 @@ def recurse(subreddit, hot_list=[], pagination_token=None):
     try:
         api_rsp = api_reqt.json()
         article_list = api_rsp.get("data", {}).get("children", None)
-        after = api_rsp.get("data", {}).get("after", None)
+        pagination_token = api_rsp.get("data", {}).get("after", None)
         if article_list is not None:
             [hot_list.append(article.get("data").get("title")) for article in article_list]
         if pagination_token is None:
