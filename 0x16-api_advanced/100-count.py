@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """recursive function that queries the Reddit API"""
-
-import json
 import requests
+import json
 
 
 def count_words(subreddit, word_list, pagination_token="", word_count=[]):
