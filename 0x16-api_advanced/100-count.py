@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Reddit API"""
+"""recursive function that queries the Reddit API"""
 
 import json
 import requests
@@ -24,33 +24,33 @@ def count_words(subreddit, word_list, pagination_token="", word_count=[]):
 
         for post in api_response['data']['children']:
             for word in post['data']['title'].split():
-                for i in range(len(word_list)):
-                    if word_list[i].lower() == word.lower():
-                        word_count[i] += 1
+                for a in range(len(word_list)):
+                    if word_list[a].lower() == word.lower():
+                        word_count[a] += 1
 
         pagination_token = api_response['data']['after']
         if pagination_token is None:
             # Merge counts for duplicate words
             merged_indices = []
-            for i in range(len(word_list)):
-                for j in range(i + 1, len(word_list)):
-                    if word_list[i].lower() == word_list[j].lower():
-                        merged_indices.append(j)
-                        word_count[i] += word_count[j]
+            for a in range(len(word_list)):
+                for b in range(a + 1, len(word_list)):
+                    if word_list[a].lower() == word_list[b].lower():
+                        merged_indices.append(b)
+                        word_count[b] += word_count[b]
 
             # Sort words by count and alphabetically
-            for i in range(len(word_list)):
-                for j in range(i, len(word_list)):
-                    if (word_count[j] > word_count[i] or
-                            (word_list[i] > word_list[j] and
-                             word_count[j] == word_count[i])):
+            for a in range(len(word_list)):
+                for b in range(a, len(word_list)):
+                    if (word_count[b] > word_count[a] or
+                            (word_list[a] > word_list[b] and
+                             word_count[b] == word_count[a])):
                         # Swap counts and words
-                        word_count[i], word_count[j] = word_count[j], word_count[i]
-                        word_list[i], word_list[j] = word_list[j], word_list[i]
+                        word_count[a], word_count[b] = word_count[b], word_count[a]
+                        word_list[a], word_list[b] = word_list[b], word_list[a]
 
             # Print results
-            for i in range(len(word_list)):
-                if (word_count[i] > 0) and i not in merged_indices:
-                    print("{}: {}".format(word_list[i].lower(), word_count[i]))
+            for a in range(len(word_list)):
+                if (word_count[a] > 0) and a not in merged_indices:
+                    print("{}: {}".format(word_list[a].lower(), word_count[a]))
         else:
             count_words(subreddit, word_list, pagination_token, word_count)
