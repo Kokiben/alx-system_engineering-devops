@@ -4,25 +4,19 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-    # Base URL for Reddit API
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    
-    # Setting a custom User-Agent to avoid Too Many Requests errors
-    headers = {'User-Agent': 'Mozilla/5.0 (compatible; RedditSubscriberChecker/1.0)'}
-    
-    try:
-        # Sending GET request to the Reddit API
-        response = requests.get(url, headers=headers, allow_redirects=False)
-        
-        # Check if the response status code is 200 (OK)
-        if response.status_code == 200:
-            # Parse the JSON response
-            data = response.json()
-            # Return the number of subscribers
-            return data['data']['subscribers']
-        else:
-            # If the status code is not 200, return 0
-            return 0
-    except requests.exceptions.RequestException:
-        # In case of any request-related errors, return 0
+    """Return the total number of subscribers on a given subreddit."""
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {
+        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
+    }
+    response = requests.get(url, headers=headers, allow_redirects=False)
+
+    # Check if the subreddit is valid
+    if response.status_code != 200:
         return 0
+
+    # Parse the response and get the number of subscribers
+    results = response.json().get("data")
+    if results is None:
+        return 0
+    return results.get("subscribers", 0)
