@@ -6,19 +6,19 @@ import requests
 
 
 def top_ten(subreddit):
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    params = {
+    api_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    paramt = {
         'limit': 10
     }
-    req = requests.get(
-        url, headers={'User-Agent': 'Python/requests'}, params=params)
+    api_reqt = requests.get(
+        api_url, headers={'User-Agent': 'Python/requests'}, params=paramt)
 
     try:
-        resp = req.json()
-        posts = resp.get("data", {}).get("children", None)
-        if posts is None:
+        resp = api_reqt.json()
+        qui_po = resp.get("data", {}).get("children", None)
+        if qui_po is None:
             print(None)
         else:
-            [print(post.get("data").get("title")) for post in posts]
+            [print(po.get("data").get("title")) for po in qui_po]
     except Exception:
         print(None)
