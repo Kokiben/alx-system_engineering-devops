@@ -8,7 +8,7 @@ exec { 'Fixer_u':
   notify  => Service['apache2'],
 }
 
-service { 'apache2_u':
+service { 'apache2':
   ensure => running,
   enable => true,
 }
