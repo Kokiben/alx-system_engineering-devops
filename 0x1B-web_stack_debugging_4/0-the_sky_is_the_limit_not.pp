@@ -1,5 +1,5 @@
 # Increase the ULIMIT for Nginx
-file_line { 'increase-nginx-ulimit':
+exec { 'increase-nginx-ulimit':
   path  => '/etc/default/nginx',
   line  => 'ULIMIT=4096',
   match => '^ULIMIT=',
@@ -12,4 +12,3 @@ exec { 'nginx-restart':
   path    => '/usr/local/bin:/bin:/sbin',
   refreshonly => true,
 }
-
