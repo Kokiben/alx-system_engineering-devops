@@ -1,14 +1,13 @@
-# Increase the ULIMIT for Nginx
-exec { 'increase-nginx-ulimit':
-  path  => '/etc/default/nginx',
-  line  => 'ULIMIT=4096',
-  match => '^ULIMIT=',
-  notify => Exec['nginx-restart'],
+# This manuscript increases the amount of traffic an Nginx server can handle
+
+# Increase the ULIMIT of the default file
+exec { 'fix--for-nginx':
+  command => 'sed -i "s/15/4096/" /etc/default/nginx',
+  path    => '/usr/local/bin/:/bin/'
 }
 
-# Restart Nginx to apply the new settings
-exec { 'nginx-restart':
-  command => '/etc/init.d/nginx restart',
-  path    => '/usr/local/bin:/bin:/sbin',
-  refreshonly => true,
+# Restart Nginx
+-> exec { 'nginx-restart':
+  command => 'nginx restart',
+  path    => '/etc/init.d/'
 }
